@@ -1,21 +1,32 @@
 import { Flex, HStack, VStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 import SearchBar from '../SearchBar';
 import SideBar from '../SideBar';
 
 const Layout: React.FC = ({ children }) => {
+
+  const { user, userIsAuthenticated } = useContext(AuthContext)
+
   return (
-    <Flex height='100vh' width='100vw'>
-      <HStack>
-        <SideBar />
-        <VStack>
-          <SearchBar />
-          <Flex>
-            {children}
-          </Flex>
-        </VStack>
-      </HStack>
-    </Flex>
+    <>
+      {userIsAuthenticated ?
+        <Flex height='100vh' width='100vw'>
+          <HStack>
+            <SideBar username={user.username} />
+            <VStack>
+              <SearchBar />
+              <Flex>
+                {children}
+              </Flex>
+            </VStack>
+          </HStack>
+        </Flex> :
+        <Flex height='100vh' width='100vw' >
+          {children}
+        </Flex>
+      }
+    </>
   );
 }
 

@@ -22,3 +22,14 @@ export async function signInRequest(data: SignInRequestData) {
     console.log('invalid user data')
   }
 }
+
+export async function recoverUserInformation() {
+  await delay()
+
+  return {
+    user: {
+      username: 'admin',
+      password: 'admin'
+    }
+  }
+}

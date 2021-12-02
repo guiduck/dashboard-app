@@ -3,7 +3,7 @@ import { setCookie, parseCookies } from 'nookies';
 import Router from 'next/router';
 
 import { useToast } from '@chakra-ui/toast';
-import { signInRequest } from '../services/auth';
+import { recoverUserInformation, signInRequest } from '../services/auth';
 
 type SignInData = {
   username: string,
@@ -31,6 +31,16 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const userIsAuthenticated = !!user;
+
+  useEffect(() => {
+    const { 'auth.token': token } = parseCookies()
+
+    if (token) {
+      recoverUserInformation().then(response => {
+        setUser(response.user)
+      })
+    }
+  }, [])
 
   const signIn = async({ username, password }: SignInData) => {
     setIsLoading(true);
