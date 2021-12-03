@@ -12,15 +12,17 @@ const Layout: React.FC = ({ children }) => {
     <>
       {userIsAuthenticated ?
         <Flex height='100vh' width='100vw'>
-          <HStack>
-            <SideBar username={user.username} />
-            <VStack>
+          <Flex height='100%'>
+            <Flex direction='column'>
+              <SideBar username={user.username} />
+            </Flex>
+            <VStack height='100%'>
               <SearchBar />
               <Flex>
                 {children}
               </Flex>
             </VStack>
-          </HStack>
+          </Flex>
         </Flex> :
         <Flex height='100vh' width='100vw' >
           {children}
