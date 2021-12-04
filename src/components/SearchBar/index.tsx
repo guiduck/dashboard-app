@@ -6,7 +6,10 @@ import {
   useColorModeValue,
   Avatar,
   Flex,
-  Divider
+  Divider,
+  Checkbox,
+  Stack,
+  Button
 } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai'
 import React from 'react';
@@ -38,6 +41,18 @@ const SearchBar: React.FC = () => {
         </InputGroup>
       </Flex>
       <Divider />
+      <Stack py={3} spacing={4} direction='row' align='center' >
+        <Checkbox defaultIsChecked>Selecionar todas</Checkbox>
+        <Button size='sm'>
+          Atribuir
+        </Button>
+        <Button size='sm'>
+          Arquivar
+        </Button>
+        <Button size='sm'>
+          Agendar
+        </Button>
+      </Stack>
     </Flex>
   );
 }

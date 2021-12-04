@@ -2,11 +2,16 @@ import { Flex } from '@chakra-ui/react';
 import React from 'react';
 import Account from '../Account';
 
-const Inbox: React.FC = () => {
+type Props = {
+  panelWidth: number
+}
+
+const Inbox: React.FC<Props> = ({panelWidth}) => {
   return (
-    <Flex direction='column'>
-      <Account />
-      <Account />
+    <Flex minWidth={panelWidth} direction='column'>
+      <Account panelWidth={panelWidth} />
+      <Account panelWidth={panelWidth} />
+      <Account panelWidth={panelWidth} />
     </Flex>
   );
 }
