@@ -1,17 +1,24 @@
 import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { MailContext } from '../../contexts/MailContext';
 import Account from '../Account';
 
-type Props = {
-  panelWidth: number
-}
+const Inbox: React.FC = () => {
 
-const Inbox: React.FC<Props> = ({panelWidth}) => {
+  const { menus } = useContext(MailContext);
+
   return (
-    <Flex minWidth={panelWidth} direction='column'>
-      <Account panelWidth={panelWidth} />
-      <Account panelWidth={panelWidth} />
-      <Account panelWidth={panelWidth} />
+    <Flex direction='column'>
+      {menus.map((menu) => {
+        return (
+          <Account
+            key={menu.id}
+            menuId={menu.id}
+            menuName={menu.name}
+            subMenus={menu.subMenus}
+          />
+        );
+      })}
     </Flex>
   );
 }

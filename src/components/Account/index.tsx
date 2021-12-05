@@ -1,36 +1,58 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex } from '@chakra-ui/react';
-import React from 'react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, chakra, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import { MailContext } from '../../contexts/MailContext';
 
-type Props = {
-  panelWidth: number
+type SubMenu = {
+  id: number,
+  name: string
 }
 
-const Account: React.FC<Props> = ({panelWidth}) => {
+type Props = {
+  menuId: number,
+  menuName: string,
+  subMenus: SubMenu[]
+}
+
+const Account: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
+
+  const { panelWidth } = useContext(MailContext);
+  console.log(menuName, menuId, subMenus);
+
   return (
     <Flex minWidth='100%'>
-      <Accordion allowMultiple>
+      <Accordion allowMultiple style={{border: '0px solid rgba(0, 0, 0, 0)'}} >
           <AccordionItem>
-
-              <AccordionButton>
-                <Flex minWidth={panelWidth} px={10} justifyContent='space-between'>
+              <AccordionButton >
+                <Flex alignItems='center' width={panelWidth - 30} minWidth={'200px'} px={10} justifyContent='space-between'>
                   <Flex >
                     <AccordionIcon />
-                    <Box flex='1' textAlign='left'>
-                      Conta 1
-                    </Box>
+                    <Flex >
+                      <Heading
+                        color={useColorModeValue("gray.700", "white")}
+                        size='sm'
+                      >
+                        {menuName}
+                      </Heading>
+                    </Flex>
                   </Flex>
-                  <Flex>15</Flex>
+                  <Flex>{subMenus.length}</Flex>
                 </Flex>
               </AccordionButton>
 
             <AccordionPanel pb={4}>
-              <Flex minWidth={panelWidth} px={10} justifyContent='space-between'>
-                <Flex>
-                  Caixa de Entrada
-                </Flex>
-                <Flex>
-                  15
-                </Flex>
+              <Flex direction='column' width={panelWidth - 30} minWidth={'200px'} px={10} >
+                  {subMenus.map((submenu)=>{
+                    return (
+                      <Flex justifyContent='space-between' alignItems='center' >
+                        <Button variant='ghost' key={submenu.id}>
+                          <chakra.p color={useColorModeValue("gray.600", "gray.300")}>
+                            {submenu.name}
+                          </chakra.p>
+                        </Button>
+                        <Flex>5</Flex>
+                      </Flex>
+                    );
+                  })}
               </Flex>
             </AccordionPanel>
           </AccordionItem>
