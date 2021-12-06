@@ -1,4 +1,15 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, chakra, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Button,
+  chakra,
+  Flex,
+  Heading,
+  useColorModeValue
+} from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MailContext } from '../../contexts/MailContext';
 
@@ -13,10 +24,13 @@ type Props = {
   subMenus: SubMenu[]
 }
 
-const Account: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
+const Menu: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
 
-  const { panelWidth } = useContext(MailContext);
-  console.log(menuName, menuId, subMenus);
+  const { panelWidth, setSelectedSubMenu } = useContext(MailContext);
+
+  const handleSelectedMenu = (menuId: number) => {
+    setSelectedSubMenu(menuId);
+  }
 
   return (
     <Flex minWidth='100%'>
@@ -44,7 +58,7 @@ const Account: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
                   {subMenus.map((submenu)=>{
                     return (
                       <Flex justifyContent='space-between' alignItems='center' >
-                        <Button variant='ghost' key={submenu.id}>
+                        <Button variant='ghost' key={submenu.id} onClick={()=>handleSelectedMenu(submenu.id)}>
                           <chakra.p color={useColorModeValue("gray.600", "gray.300")}>
                             {submenu.name}
                           </chakra.p>
@@ -61,4 +75,4 @@ const Account: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
   );
 }
 
-export default Account;
+export default Menu;

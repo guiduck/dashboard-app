@@ -1,5 +1,6 @@
-import { Flex } from '@chakra-ui/react';
-import React from 'react';
+import { Flex, Spinner } from '@chakra-ui/react';
+import React, { useContext } from 'react';
+import { MailContext } from '../../contexts/MailContext';
 import MailCard from '../MailCard';
 
 type Email = {
@@ -10,18 +11,20 @@ type Email = {
   users: string[]
 }
 
-type Props = {
-  emails: Email[]
-}
+const MailList: React.FC= () => {
 
-const MailList: React.FC<Props> = ({ emails }) => {
+  const { emails, emailIsLoading } = useContext(MailContext);
+
   return (
     <Flex direction='column'>
-      {emails.map((email, index) => {
-        return (
-          <MailCard key={index} />
-        );
-      })}
+      {emails && !emailIsLoading ?
+        emails.map((email, index) => {
+          return (
+            <MailCard key={index} />
+          );
+        }) :
+        <Spinner size='xl' />
+      }
     </Flex>
   );
 }

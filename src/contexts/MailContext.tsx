@@ -1,6 +1,6 @@
-import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, SetStateAction, useEffect, useState } from "react";
+import useApi from "../hooks/useApi";
 import { api } from "../services/api";
-import { AuthContext } from "./AuthContext";
 
 type SubMenuItems = {
   id: number,
@@ -21,44 +21,72 @@ type Menu = {
   subMenus: SubMenu[]
 }
 
+type Email = {
+  id: number,
+  name: string,
+  subject: string
+  owner: string,
+  users: string[]
+}
+
+type EmailFetchResult = {
+  id: number,
+  subMenuItems: Email[]
+}
+
 type MailContextType = {
+  emails: Email[],
+  emailIsLoading: boolean,
   menus: Menu[],
-  getMenus: () => Promise<void>,
-  isLoading: boolean,
+  menuIsLoading: boolean
   panelWidth: number,
-  setPanelWidth: Dispatch<SetStateAction<number>>
+  setPanelWidth: Dispatch<SetStateAction<number>>,
+  selectedSubMenu: number,
+  setSelectedSubMenu: Dispatch<SetStateAction<number>>,
+  getEmailById: (data: number) => Promise<void>
 }
 
 export const MailContext = createContext({} as MailContextType);
 
 export const MailProvider = ({ children }) => {
 
-  const [menus, setMenus] = useState<Menu[] | undefined>([]);
+  const [selectedSubMenu, setSelectedSubMenu] = useState(11);
+  const { response: menus, loading: menuIsLoading, error: menuError } = useApi({method: 'get', url: '/menus'});
+
   const [panelWidth, setPanelWidth] = useState(250);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const { user } = useContext(AuthContext);
+  const [emails, setEmails] = useState<Email[] | undefined>([]);
+  const [emailIsLoading, setEmailIsLoading] = useState(false);
 
-  const getMenus = async() =>{
-    setIsLoading(true);
+  const getEmailById = async(menuId: number) => {
+    setEmailIsLoading(true);
     try {
-      const response = await api.get('/menus');
-      setMenus(response.data);
-    } catch(err) {
-      console.log(err);
-      setError(err.message);
+      const response = await api.get<EmailFetchResult>(`/items/${menuId}`);
+      setEmails(response.data.subMenuItems);
+      console.log(response.data)
+    } catch (err) {
+      console.log(err.message);
     } finally {
-      setIsLoading(false);
+      setEmailIsLoading(false);
     }
   }
 
   useEffect(() => {
-    getMenus();
-  }, [user])
+    getEmailById(selectedSubMenu);
+  }, [selectedSubMenu]);
 
   return (
-    <MailContext.Provider value={{ menus, getMenus, isLoading, panelWidth, setPanelWidth }}>
+    <MailContext.Provider value={{
+      emails,
+      emailIsLoading,
+      menus,
+      menuIsLoading,
+      panelWidth,
+      setPanelWidth,
+      selectedSubMenu,
+      setSelectedSubMenu,
+      getEmailById
+    }}>
       {children}
     </MailContext.Provider>
   );

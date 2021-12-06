@@ -10,6 +10,9 @@ import {
 import React from 'react';
 
 const MailCard: React.FC = () => {
+
+
+
   return (
     <Flex
       bg={useColorModeValue("#F9FAFB", "gray.600")}

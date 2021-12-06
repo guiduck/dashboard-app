@@ -1,7 +1,7 @@
-import { Flex } from '@chakra-ui/react';
+import { Flex, Spinner } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MailContext } from '../../contexts/MailContext';
-import Account from '../Account';
+import Menu from '../Menu';
 
 const Inbox: React.FC = () => {
 
@@ -9,16 +9,19 @@ const Inbox: React.FC = () => {
 
   return (
     <Flex direction='column'>
-      {menus.map((menu) => {
-        return (
-          <Account
-            key={menu.id}
-            menuId={menu.id}
-            menuName={menu.name}
-            subMenus={menu.subMenus}
-          />
-        );
-      })}
+      {menus && menus != undefined ?
+        menus.map((menu) => {
+          return (
+            <Menu
+              key={menu.id}
+              menuId={menu.id}
+              menuName={menu.name}
+              subMenus={menu.subMenus}
+            />
+          );
+        }) :
+        <Spinner size='xl' />
+      }
     </Flex>
   );
 }
