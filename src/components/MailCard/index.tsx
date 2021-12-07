@@ -9,9 +9,20 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 
-const MailCard: React.FC = () => {
+type Email = {
+  id: number,
+  name: string,
+  subject: string
+  owner: string,
+  users: string[]
+}
 
-
+const MailCard: React.FC<Email> = ({
+  name,
+  subject,
+  owner,
+  users
+}) => {
 
   return (
     <Flex
@@ -30,15 +41,15 @@ const MailCard: React.FC = () => {
         bg={useColorModeValue("white", "gray.800")}
         maxW="2xl"
       >
-        <Flex>
+        <Flex >
           <Flex alignItems='center' mx={5}>
             <Avatar
-              name='The Initials'
+              name={name}
               size='xl'
               _hover={{ bg: "gray.500" }}
             />
           </Flex>
-          <Flex direction='column'>
+          <Flex direction='column' minWidth='330px'>
             <Flex justifyContent="space-between">
               <chakra.h1
                 color={useColorModeValue("gray.700", "white")}
@@ -47,7 +58,7 @@ const MailCard: React.FC = () => {
                 textTransform="uppercase"
                 minHeight='55px'
               >
-                Authors name
+                {name}
               </chakra.h1>
               <chakra.span
                 fontSize="sm"
@@ -59,11 +70,7 @@ const MailCard: React.FC = () => {
 
             <Box >
               <chakra.p color={useColorModeValue("gray.600", "gray.300")}>
-                This is mail message
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora
-                expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos
-                enim reprehenderit nisi, accusamus delectus nihil quis facere in
-                modi ratione libero!
+                {subject}
               </chakra.p>
             </Box>
 
@@ -76,10 +83,11 @@ const MailCard: React.FC = () => {
               </Link>
 
               <AvatarGroup size='md' max={3} alignItems="center">
-                <Avatar name='Oxi Doido' />
-                <Avatar name='The Assfucker' />
-                <Avatar name='Oxi Doido' />
-                <Avatar name='Oxi Doido' />
+                {users.map((user) => {
+                  return (
+                    <Avatar name={user[0] + ' ' + user[1]} />
+                  );
+                })}
               </AvatarGroup>
             </Flex>
           </Flex>

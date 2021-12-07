@@ -20,7 +20,14 @@ const MailList: React.FC= () => {
       {emails && !emailIsLoading ?
         emails.map((email, index) => {
           return (
-            <MailCard key={index} />
+            <MailCard
+              key={index}
+              id={email.id}
+              name={email.name}
+              subject={email.subject}
+              owner={email.owner}
+              users={email.users}
+            />
           );
         }) :
         <Spinner size='xl' />
