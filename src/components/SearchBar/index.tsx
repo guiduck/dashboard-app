@@ -1,10 +1,8 @@
 import {
-  HStack,
   InputGroup,
   InputLeftElement,
   Input,
   useColorModeValue,
-  Avatar,
   Flex,
   Divider,
   Checkbox,
@@ -26,8 +24,8 @@ const SearchBar: React.FC = () => {
       direction='column'
     >
       <Flex
-        py={5}
-        px={{ base: 2, sm: 4 }}
+        py={8}
+        pr={20}
         spacing={3}
         display="flex"
         alignItems="center"
@@ -37,7 +35,7 @@ const SearchBar: React.FC = () => {
             pointerEvents="none"
             children={<AiOutlineSearch />}
           />
-          <Input w='full' type="tel" placeholder="Search..." />
+          <Input w='full' h='50px' type="tel" placeholder="Search..." />
         </InputGroup>
       </Flex>
       <Divider />

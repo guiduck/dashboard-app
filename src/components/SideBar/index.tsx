@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Avatar, Button, Divider, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import React, { useCallback, useContext } from 'react';
-import { MailContext } from '../../contexts/MailContext';
+import React, { useContext } from 'react';
+import { ResizeContext } from '../../contexts/ResizeContext';
 import Inbox from '../Inbox';
 
 type Props = {
@@ -10,36 +10,16 @@ type Props = {
 
 const SideBar: React.FC<Props> = ({ username }) => {
 
-  const { panelWidth, setPanelWidth } = useContext(MailContext);
-
-  const minPanelWidth = 250;
-  const maxPanelWidth = 1000;
-
-  const handleMouseDown = e => {
-    document.addEventListener("mouseup", handleMouseUp, true);
-    document.addEventListener("mousemove", handleMouseMove, true);
-  };
-
-  const handleMouseUp = () => {
-    document.removeEventListener("mouseup", handleMouseUp, true);
-    document.removeEventListener("mousemove", handleMouseMove, true);
-  };
-
-  const handleMouseMove = useCallback(e => {
-    const newWidth = e.clientX - document.body.offsetLeft;
-    if (newWidth > minPanelWidth && newWidth < maxPanelWidth) {
-      setPanelWidth(newWidth);
-    }
-  }, []);
+  const { leftPanelWidth, handleMouseDown } = useContext(ResizeContext);
 
   return (
     <>
       <Flex
-        minWidth={panelWidth}
+        minWidth={leftPanelWidth}
         direction='column'
         px={2}
       >
-        <Flex justifyContent='space-between' minHeight='80px' mx={10} pt={5}>
+        <Flex justifyContent='space-between' minHeight='80px' mx={10} py={8}>
           <Avatar
             name={username}
           />

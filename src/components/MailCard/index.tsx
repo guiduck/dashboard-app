@@ -20,15 +20,14 @@ type Email = {
 const MailCard: React.FC<Email> = ({
   name,
   subject,
-  owner,
   users
 }) => {
 
   return (
     <Flex
       bg={useColorModeValue("#F9FAFB", "gray.600")}
-      px={2}
-      py={2}
+      px={1}
+      pb={1}
       w="full"
       alignItems="center"
       justifyContent="center"
