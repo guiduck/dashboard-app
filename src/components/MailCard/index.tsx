@@ -8,7 +8,7 @@ import {
   Link,
   useColorModeValue
 } from '@chakra-ui/react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MailContext } from '../../contexts/MailContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
 
@@ -28,18 +28,32 @@ const MailCard: React.FC<Email> = ({
   index
 }) => {
 
-  const { onSelection, setOnSelection, selectedItems, setSelectedItems, allSelected } = useContext(MailContext);
+  const { selectedItems, setSelectedItems, arquivedItems, onSelectionMode, setOnSelectionMode } = useContext(MailContext);
   const { rightPanelWidth } = useContext(ResizeContext);
+
+  const [onSelection, setOnSelection] = useState(false);
 
   useEffect(() => {
     setSelectedItems([...selectedItems, false]);
-  }, [])
-
+  }, []);
 
   const checkItem = (e) => {
     const newSelectedItems = [...selectedItems];
     newSelectedItems[index] = e;
     setSelectedItems(newSelectedItems);
+    if (e) {
+      setOnSelectionMode(true);
+    } else {
+      setOnSelectionMode(false);
+    }
+  }
+
+  const handleMouseOver = () => {
+    setOnSelection(true);
+  }
+
+  const handleMouseOut = () => {
+    setOnSelection(false);
   }
 
   return (
@@ -61,10 +75,12 @@ const MailCard: React.FC<Email> = ({
         _hover={{ bg: useColorModeValue("gray.200", "gray.600") }}
         maxW={rightPanelWidth}
         width='100%'
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
       >
         <Flex width='100%' >
           <Flex alignItems='center' mx={5}>
-            { !onSelection ?
+            { onSelection || selectedItems.includes(true) || onSelectionMode && selectedItems.includes(true) ?
               <Checkbox
                 size='lg'
                 isChecked={selectedItems[index]}

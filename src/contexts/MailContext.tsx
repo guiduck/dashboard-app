@@ -44,10 +44,12 @@ type MailContextType = {
   getEmailById: (data: number) => Promise<void>,
   selectedItems: boolean[],
   setSelectedItems: Dispatch<SetStateAction<boolean[]>>,
-  onSelection: boolean,
-  setOnSelection: Dispatch<SetStateAction<boolean>>,
   allSelected: boolean,
-  isIndeterminate: boolean
+  isIndeterminate: boolean,
+  setArquivedItems: Dispatch<SetStateAction<boolean[]>>,
+  arquivedItems: boolean[],
+  onSelectionMode: boolean,
+  setOnSelectionMode: Dispatch<SetStateAction<boolean>>
 }
 
 export const MailContext = createContext({} as MailContextType);
@@ -57,8 +59,9 @@ export const MailProvider = ({ children }) => {
   const [selectedSubMenu, setSelectedSubMenu] = useState(11);
   const { response: menus, loading: menuIsLoading, error: menuError } = useApi({method: 'get', url: '/menus'});
 
-  const [onSelection, setOnSelection] = useState(false);
+  const [onSelectionMode, setOnSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [arquivedItems, setArquivedItems] = useState([]);
   const allSelected = selectedItems.every(Boolean);
   const isIndeterminate = selectedItems.some(Boolean) && !allSelected;
 
@@ -80,6 +83,7 @@ export const MailProvider = ({ children }) => {
 
   useEffect(() => {
     getEmailById(selectedSubMenu);
+
   }, [selectedSubMenu]);
 
   return (
@@ -93,10 +97,12 @@ export const MailProvider = ({ children }) => {
       getEmailById,
       selectedItems,
       setSelectedItems,
-      onSelection,
-      setOnSelection,
       allSelected,
-      isIndeterminate
+      isIndeterminate,
+      setArquivedItems,
+      arquivedItems,
+      onSelectionMode,
+      setOnSelectionMode
     }}>
       {children}
     </MailContext.Provider>

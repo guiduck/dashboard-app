@@ -17,9 +17,14 @@ import { MailContext } from '../../contexts/MailContext';
 const SearchBar: React.FC = () => {
 
   const { rightPanelWidth } = useContext(ResizeContext);
-  const { isIndeterminate, setSelectedItems, allSelected, selectedItems } = useContext(MailContext);
+  const { isIndeterminate, setSelectedItems, allSelected, selectedItems, setArquivedItems, setOnSelectionMode } = useContext(MailContext);
 
   const bg = useColorModeValue("white", "gray.800");
+
+  const handleFullSelection = (e) => {
+    setSelectedItems(new Array(selectedItems.length).fill(e));
+    setOnSelectionMode(e);
+  }
 
   return (
     <Flex
@@ -50,12 +55,12 @@ const SearchBar: React.FC = () => {
         <Checkbox
           isChecked={allSelected}
           isIndeterminate={isIndeterminate}
-          onChange={(e) => setSelectedItems(new Array(selectedItems.length).fill(e.target.checked))}
+          onChange={(e) => handleFullSelection(e.target.checked)}
         />
         <Button size='sm'>
           Atribuir
         </Button>
-        <Button size='sm'>
+        <Button size='sm' onClick={(e) => setArquivedItems([...selectedItems])}>
           Arquivar
         </Button>
         <Button size='sm'>

@@ -13,26 +13,30 @@ type Email = {
 
 const MailList: React.FC= () => {
 
-  const { emails, emailIsLoading, setSelectedItems } = useContext(MailContext);
+  const { emails, emailIsLoading, setSelectedItems, arquivedItems } = useContext(MailContext);
 
   useEffect(() => {
-    setSelectedItems(new Array(emails.length).fill(''))
-  }, [emails])
+    setSelectedItems(new Array(emails.length).fill(false))
+  }, [emails, arquivedItems])
 
   return (
     <Flex direction='column' width='100%' p={5} >
       {emails && !emailIsLoading ?
         emails.map((email, index) => {
           return (
-            <MailCard
-              key={index}
-              id={email.id}
-              name={email.name}
-              subject={email.subject}
-              owner={email.owner}
-              users={email.users}
-              index={index}
-            />
+            <>
+              {arquivedItems[index] != true ?
+                <MailCard
+                  key={index}
+                  id={email.id}
+                  name={email.name}
+                  subject={email.subject}
+                  owner={email.owner}
+                  users={email.users}
+                  index={index}
+                /> : <></>
+              }
+            </>
           );
         }) :
         <Spinner size='xl' />
