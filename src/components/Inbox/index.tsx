@@ -8,7 +8,7 @@ const Inbox: React.FC = () => {
   const { menus } = useContext(MailContext);
 
   return (
-    <Flex direction='column'>
+    <Flex direction='column' width='100%'>
       {menus && menus != undefined ?
         menus.map((menu) => {
           return (

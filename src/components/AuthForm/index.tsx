@@ -1,4 +1,4 @@
-import { Button, Container, Flex, FormControl, FormErrorMessage, FormHelperText, Heading, Input, Link, useColorModeValue } from '@chakra-ui/react';
+import { Button, Container, Flex, FormControl, FormErrorMessage, FormHelperText, Heading, Input, useColorModeValue } from '@chakra-ui/react';
 import Router from 'next/router';
 import { useForm } from 'react-hook-form';
 import React, { useContext, useEffect } from 'react';
@@ -26,6 +26,7 @@ const AuthForm: React.FC = () => {
     if(userIsAuthenticated) {
       Router.push('/dashboard');
     }
+
   }, [userIsAuthenticated]);
 
   return (

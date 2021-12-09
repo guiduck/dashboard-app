@@ -10,9 +10,12 @@ import {
   Button
 } from '@chakra-ui/react';
 import { AiOutlineSearch } from 'react-icons/ai'
-import React from 'react';
+import React, { useContext } from 'react';
+import { ResizeContext } from '../../contexts/ResizeContext';
 
 const SearchBar: React.FC = () => {
+
+  const { rightPanelWidth } = useContext(ResizeContext);
 
   const bg = useColorModeValue("white", "gray.800");
 
@@ -35,7 +38,7 @@ const SearchBar: React.FC = () => {
             pointerEvents="none"
             children={<AiOutlineSearch />}
           />
-          <Input w='full' h='50px' type="tel" placeholder="Search..." />
+          <Input width={rightPanelWidth - 202} h='48px' type="tel" placeholder="Search..." />
         </InputGroup>
       </Flex>
       <Divider />

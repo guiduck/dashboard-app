@@ -16,7 +16,7 @@ const MailList: React.FC= () => {
   const { emails, emailIsLoading } = useContext(MailContext);
 
   return (
-    <Flex direction='column'  >
+    <Flex direction='column' width='100%' p={5} >
       {emails && !emailIsLoading ?
         emails.map((email, index) => {
           return (

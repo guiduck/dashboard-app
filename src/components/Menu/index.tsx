@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { MailContext } from '../../contexts/MailContext';
+import { ResizeContext } from '../../contexts/ResizeContext';
 
 type SubMenu = {
   id: number,
@@ -26,7 +27,8 @@ type Props = {
 
 const Menu: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
 
-  const { panelWidth, setSelectedSubMenu } = useContext(MailContext);
+  const { setSelectedSubMenu } = useContext(MailContext);
+  const { leftPanelWidth } = useContext(ResizeContext);
 
   const handleSelectedMenu = (menuId: number) => {
     setSelectedSubMenu(menuId);
@@ -37,7 +39,7 @@ const Menu: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
       <Accordion allowMultiple style={{border: '0px solid rgba(0, 0, 0, 0)'}} >
           <AccordionItem>
               <AccordionButton >
-                <Flex alignItems='center' width={panelWidth - 30} minWidth={'200px'} px={10} justifyContent='space-between'>
+                <Flex alignItems='center' width={leftPanelWidth - 30} minWidth={'200px'} px={10} justifyContent='space-between'>
                   <Flex >
                     <AccordionIcon />
                     <Flex >
@@ -54,7 +56,7 @@ const Menu: React.FC<Props> = ({ menuId, menuName, subMenus }) => {
               </AccordionButton>
 
             <AccordionPanel pb={4}>
-              <Flex direction='column' width={panelWidth - 30} minWidth={'200px'} px={10} >
+              <Flex direction='column' width={leftPanelWidth - 30} minWidth={'200px'} px={10} >
                   {subMenus.map((submenu)=>{
                     return (
                       <Flex justifyContent='space-between' alignItems='center' >

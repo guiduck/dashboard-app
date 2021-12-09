@@ -19,11 +19,11 @@ const SideBar: React.FC<Props> = ({ username }) => {
         direction='column'
         px={2}
       >
-        <Flex justifyContent='space-between' minHeight='80px' mx={10} py={8}>
+        <Flex justifyContent='space-between' width='100%' minHeight='80px' p={8}>
           <Avatar
             name={username}
           />
-          <Menu>
+          <Menu >
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               New
             </MenuButton>

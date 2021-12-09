@@ -7,7 +7,8 @@ import {
   Link,
   useColorModeValue
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ResizeContext } from '../../contexts/ResizeContext';
 
 type Email = {
   id: number,
@@ -23,9 +24,11 @@ const MailCard: React.FC<Email> = ({
   users
 }) => {
 
+  const { rightPanelWidth } = useContext(ResizeContext)
+
   return (
     <Flex
-      bg={useColorModeValue("#F9FAFB", "gray.600")}
+      bg={useColorModeValue("#F9FAFB", "gray.700")}
       px={1}
       pb={1}
       w="full"
@@ -35,12 +38,15 @@ const MailCard: React.FC<Email> = ({
       <Box
         mx="auto"
         p={3}
+        px={10}
         rounded="lg"
         boxShadow="2xl"
-        bg={useColorModeValue("white", "gray.800")}
-        maxW="2xl"
+        bg={useColorModeValue("white", "gray.700")}
+        _hover={{ bg: "gray.600" }}
+        maxW={rightPanelWidth}
+        width='100%'
       >
-        <Flex >
+        <Flex width='100%' >
           <Flex alignItems='center' mx={5}>
             <Avatar
               name={name}
@@ -48,7 +54,7 @@ const MailCard: React.FC<Email> = ({
               _hover={{ bg: "gray.500" }}
             />
           </Flex>
-          <Flex direction='column' minWidth='330px'>
+          <Flex direction='column' width='100%'>
             <Flex justifyContent="space-between">
               <chakra.h1
                 color={useColorModeValue("gray.700", "white")}

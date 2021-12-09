@@ -1,7 +1,6 @@
-import { Box, Container, Flex, VStack } from '@chakra-ui/react';
+import { Flex, } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import { MailContext } from '../../contexts/MailContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
 import SearchBar from '../SearchBar';
 import SideBar from '../SideBar';
