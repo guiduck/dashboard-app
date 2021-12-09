@@ -1,5 +1,5 @@
 import { Flex, Spinner } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { MailContext } from '../../contexts/MailContext';
 import MailCard from '../MailCard';
 
@@ -13,7 +13,11 @@ type Email = {
 
 const MailList: React.FC= () => {
 
-  const { emails, emailIsLoading } = useContext(MailContext);
+  const { emails, emailIsLoading, setSelectedItems } = useContext(MailContext);
+
+  useEffect(() => {
+    setSelectedItems(new Array(emails.length).fill(''))
+  }, [emails])
 
   return (
     <Flex direction='column' width='100%' p={5} >
@@ -27,6 +31,7 @@ const MailList: React.FC= () => {
               subject={email.subject}
               owner={email.owner}
               users={email.users}
+              index={index}
             />
           );
         }) :

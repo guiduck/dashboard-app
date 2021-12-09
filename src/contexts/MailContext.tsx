@@ -42,6 +42,12 @@ type MailContextType = {
   selectedSubMenu: number,
   setSelectedSubMenu: Dispatch<SetStateAction<number>>,
   getEmailById: (data: number) => Promise<void>,
+  selectedItems: boolean[],
+  setSelectedItems: Dispatch<SetStateAction<boolean[]>>,
+  onSelection: boolean,
+  setOnSelection: Dispatch<SetStateAction<boolean>>,
+  allSelected: boolean,
+  isIndeterminate: boolean
 }
 
 export const MailContext = createContext({} as MailContextType);
@@ -50,6 +56,11 @@ export const MailProvider = ({ children }) => {
 
   const [selectedSubMenu, setSelectedSubMenu] = useState(11);
   const { response: menus, loading: menuIsLoading, error: menuError } = useApi({method: 'get', url: '/menus'});
+
+  const [onSelection, setOnSelection] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+  const allSelected = selectedItems.every(Boolean);
+  const isIndeterminate = selectedItems.some(Boolean) && !allSelected;
 
   const [emails, setEmails] = useState<Email[] | undefined>([]);
   const [emailIsLoading, setEmailIsLoading] = useState(false);
@@ -80,6 +91,12 @@ export const MailProvider = ({ children }) => {
       selectedSubMenu,
       setSelectedSubMenu,
       getEmailById,
+      selectedItems,
+      setSelectedItems,
+      onSelection,
+      setOnSelection,
+      allSelected,
+      isIndeterminate
     }}>
       {children}
     </MailContext.Provider>

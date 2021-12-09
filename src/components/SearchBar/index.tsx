@@ -12,19 +12,23 @@ import {
 import { AiOutlineSearch } from 'react-icons/ai'
 import React, { useContext } from 'react';
 import { ResizeContext } from '../../contexts/ResizeContext';
+import { MailContext } from '../../contexts/MailContext';
 
 const SearchBar: React.FC = () => {
 
   const { rightPanelWidth } = useContext(ResizeContext);
+  const { isIndeterminate, setSelectedItems, allSelected, selectedItems } = useContext(MailContext);
 
   const bg = useColorModeValue("white", "gray.800");
 
   return (
-    <Flex bg={bg}
+    <Flex
+      bg={bg}
       w="full"
       px={3}
       shadow="md"
       direction='column'
+      ml={6}
     >
       <Flex
         py={8}
@@ -43,7 +47,11 @@ const SearchBar: React.FC = () => {
       </Flex>
       <Divider />
       <Stack py={3} spacing={4} direction='row' align='center' >
-        <Checkbox defaultIsChecked>Selecionar todas</Checkbox>
+        <Checkbox
+          isChecked={allSelected}
+          isIndeterminate={isIndeterminate}
+          onChange={(e) => setSelectedItems(new Array(selectedItems.length).fill(e.target.checked))}
+        />
         <Button size='sm'>
           Atribuir
         </Button>

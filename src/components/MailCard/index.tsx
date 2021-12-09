@@ -3,11 +3,13 @@ import {
   AvatarGroup,
   Box,
   chakra,
+  Checkbox,
   Flex,
   Link,
   useColorModeValue
 } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { MailContext } from '../../contexts/MailContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
 
 type Email = {
@@ -15,16 +17,30 @@ type Email = {
   name: string,
   subject: string
   owner: string,
-  users: string[]
+  users: string[],
+  index: number
 }
 
 const MailCard: React.FC<Email> = ({
   name,
   subject,
-  users
+  users,
+  index
 }) => {
 
-  const { rightPanelWidth } = useContext(ResizeContext)
+  const { onSelection, setOnSelection, selectedItems, setSelectedItems, allSelected } = useContext(MailContext);
+  const { rightPanelWidth } = useContext(ResizeContext);
+
+  useEffect(() => {
+    setSelectedItems([...selectedItems, false]);
+  }, [])
+
+
+  const checkItem = (e) => {
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index] = e;
+    setSelectedItems(newSelectedItems);
+  }
 
   return (
     <Flex
@@ -42,17 +58,25 @@ const MailCard: React.FC<Email> = ({
         rounded="lg"
         boxShadow="2xl"
         bg={useColorModeValue("white", "gray.700")}
-        _hover={{ bg: "gray.600" }}
+        _hover={{ bg: useColorModeValue("gray.200", "gray.600") }}
         maxW={rightPanelWidth}
         width='100%'
       >
         <Flex width='100%' >
           <Flex alignItems='center' mx={5}>
-            <Avatar
-              name={name}
-              size='xl'
-              _hover={{ bg: "gray.500" }}
-            />
+            { !onSelection ?
+              <Checkbox
+                size='lg'
+                isChecked={selectedItems[index]}
+                onChange={(e) => checkItem(e.target.checked)}
+              /> :
+              <Avatar
+                name={name}
+                size='lg'
+                _hover={{ bg: "gray.500" }}
+              />
+            }
+
           </Flex>
           <Flex direction='column' width='100%'>
             <Flex justifyContent="space-between">
@@ -80,12 +104,11 @@ const MailCard: React.FC<Email> = ({
             </Box>
 
             <Flex justifyContent="space-between" alignItems="center" mt={1}>
-              <Link
+              <chakra.p
                 color={useColorModeValue("brand.600", "brand.400")}
-                _hover={{ textDecor: "underline" }}
               >
-                Read more
-              </Link>
+                Caixa de Entrada
+              </chakra.p>
 
               <AvatarGroup size='md' max={3} alignItems="center">
                 {users.map((user) => {

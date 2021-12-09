@@ -1,5 +1,5 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Avatar, Button, Divider, Flex, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon, DragHandleIcon } from '@chakra-ui/icons';
+import { Avatar, Button, Divider, Flex, Menu, MenuButton, MenuItem, MenuList, useColorModeValue } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { ResizeContext } from '../../contexts/ResizeContext';
 import Inbox from '../Inbox';
@@ -15,9 +15,11 @@ const SideBar: React.FC<Props> = ({ username }) => {
   return (
     <>
       <Flex
+        h='full'
         minWidth={leftPanelWidth}
         direction='column'
         px={2}
+        bgGradient={useColorModeValue("linear(to-b, gray.100, white)", "linear(to-b, gray.700, gray.800)")}
       >
         <Flex justifyContent='space-between' width='100%' minHeight='80px' p={8}>
           <Avatar
@@ -58,7 +60,11 @@ const SideBar: React.FC<Props> = ({ username }) => {
           zIndex: 100,
         }}
         onMouseDown={e => handleMouseDown(e)}
-      />
+        alignItems='center'
+        justifyContent='center'
+        mt={-100}
+        color="gray.400"
+      ><ChevronRightIcon w={7} h={7} /></Flex>
     </>
   );
 }
