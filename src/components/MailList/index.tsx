@@ -34,12 +34,12 @@ const MailList: React.FC= () => {
                   owner={email.owner}
                   users={email.users}
                   index={index}
-                /> 
+                />
               }
             </>
           );
         }) :
-        <Spinner size='xl' />
+        <Flex justifyContent='center' alignItems='center'><Spinner size='xl' /></Flex>
       }
     </Flex>
   );

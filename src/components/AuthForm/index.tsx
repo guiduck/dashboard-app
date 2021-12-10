@@ -1,8 +1,9 @@
-import { Button, Container, Flex, FormControl, FormErrorMessage, FormHelperText, Heading, Input, useColorModeValue } from '@chakra-ui/react';
+import { Button, Container, Flex, FormControl, FormErrorMessage, FormHelperText, Heading, IconButton, Input, useColorMode, useColorModeValue } from '@chakra-ui/react';
 import Router from 'next/router';
 import { useForm } from 'react-hook-form';
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 type User = {
   username: string,
@@ -10,6 +11,8 @@ type User = {
 }
 
 const AuthForm: React.FC = () => {
+
+  const { toggleColorMode, colorMode } = useColorMode();
 
   const formBackground = useColorModeValue('gray.200', 'gray.700');
   const { signIn, isLoading, userIsAuthenticated } = useContext(AuthContext);
@@ -31,10 +34,24 @@ const AuthForm: React.FC = () => {
 
   return (
     <Container>
+
       <Flex boxShadow='2xl' direction='column' background={formBackground} p={12} rounded={10} >
-        <Heading mb={6}>
-          Login
-        </Heading>
+        <Flex justifyContent='space-between'>
+          <Heading mb={6}>
+            Login
+          </Heading>
+          <Flex style={{position: 'sticky', right: 30}}>
+          <IconButton
+            bg={useColorModeValue('gray.200', 'gray.700')}
+            p={2}
+            aria-label="theme"
+            fontSize="20px"
+            icon={<>{colorMode === 'dark' ? <SunIcon/> : <MoonIcon/>}</>}
+            onClick={toggleColorMode}
+          />
+        </Flex>
+
+      </Flex>
         <form onSubmit={handleSubmit(signInHandler)}>
           <Flex>
             <FormControl mb={3} isInvalid={errors.username && errors.username.type === 'required'}>
@@ -68,6 +85,7 @@ const AuthForm: React.FC = () => {
         </form>
         {/* <Flex>{JSON.stringify(user)}</Flex> */}
       </Flex>
+
     </Container>
   );
 }
