@@ -2,9 +2,27 @@
 
 ### Overview
 
-This is a random quiz app generator that consumes an API made using NextJS, Typescript, eslint, prettier, Chakra-ui and Axios. The app asks for an username to authenticate and a difficulty level to request the list of questions, then it generates a random quiz based on the input of 10 questions and by the end the scoreboard to redirect the user back to the form page.
+  This is a simple dashboard layout that consumes an API made using NextJS, Typescript, eslint, prettier, Chakra-ui and Axios. The app asks for an username(you can login using "admin" as both username and password) to authenticate then you have access to the dashboard page as long as the simulated token is saved in your cookies; the messages can be selected and archieved, other buttons have no functionallity. If the user is not authenticated it redirects to the login page or you can logout by clicking in the user avatar at the sidebar component.
 
 This project was bootstrapped with [Create Next App](https://nextjs.org/docs/api-reference/create-next-app).
+
+## Presentation
+### Screenshots
+
+![loginDark](https://github.com/guiduck/dashboard-app/blob/main/public/images/loginDark.jpeg)
+![loginLight](https://github.com/guiduck/dashboard-app/blob/main/public/images/loginLight.jpeg)
+![dashboardDark](https://github.com/guiduck/dashboard-app/blob/main/public/images/dashboardDark.jpeg)
+![dashboardLight](https://github.com/guiduck/dashboard-app/blob/main/public/images/dashboardLight.jpeg)
+
+* Archieve: 
+
+![archieve](https://github.com/guiduck/dashboard-app/blob/main/public/images/archieveGif.gif)
+* Resize:
+
+![resize](https://github.com/guiduck/dashboard-app/blob/main/public/images/resizeGif.gif)
+* Resize:
+
+![theme](https://github.com/guiduck/dashboard-app/blob/main/public/images/themeGif.gif)
 
 ## Tech Stack
 ### Devlopment
@@ -16,7 +34,7 @@ This project was bootstrapped with [Create Next App](https://nextjs.org/docs/api
 * Icons: [Chakra-ui](https://chakra-ui.com/docs/media-and-icons/icon)
 
 ### API
-* [Random Quiz](https://quizapi.io/docs/1.0/random-quiz)
+* [WiiD](http://my-json-server.typicode.com/workinideas/vagafrontendteste/menus)
 
 ### Linter
 * [Prettier](https://github.com/prettier/prettier)
@@ -75,9 +93,3 @@ For more information refer to * [Next.js CLI](https://nextjs.org/docs/api-refere
 * `src/context` the QuizContext used for global state control of the quiz related data;
 * `src/Pages/` first level router components;
 
-## Screenshots
-![quizPage](https://github.com/guiduck/random-quiz-app/blob/main/public/images/quizPage.jpeg)
-![quizPageWrong](https://github.com/guiduck/random-quiz-app/blob/main/public/images/quizPageWrong.jpeg)
-![scoreboard](https://github.com/guiduck/random-quiz-app/blob/main/public/images/scoreboard.jpeg)
-![startQuizPage](https://github.com/guiduck/random-quiz-app/blob/main/public/images/startQuizPage.jpeg)
-![whitetheme](https://github.com/guiduck/random-quiz-app/blob/main/public/images/whitetheme.jpeg)
