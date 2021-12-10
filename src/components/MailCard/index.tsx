@@ -8,7 +8,7 @@ import {
   Link,
   useColorModeValue
 } from '@chakra-ui/react';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { MailContext } from '../../contexts/MailContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
 
@@ -28,14 +28,10 @@ const MailCard: React.FC<Email> = ({
   index
 }) => {
 
-  const { selectedItems, setSelectedItems, arquivedItems, onSelectionMode, setOnSelectionMode } = useContext(MailContext);
+  const { selectedItems, setSelectedItems, onSelectionMode, setOnSelectionMode } = useContext(MailContext);
   const { rightPanelWidth } = useContext(ResizeContext);
 
   const [onSelection, setOnSelection] = useState(false);
-
-  useEffect(() => {
-    setSelectedItems([...selectedItems, false]);
-  }, []);
 
   const checkItem = (e) => {
     const newSelectedItems = [...selectedItems];

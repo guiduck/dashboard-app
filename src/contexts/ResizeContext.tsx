@@ -7,7 +7,6 @@ type ResizeContextType = {
   handleMouseMove: (data: any) => void,
   handleMouseDown: (data: any) => void,
   handleMouseUp: (data: any) => void,
-  setClientWidth: Dispatch<SetStateAction<number>>,
 }
 
 export const ResizeContext = createContext({ } as ResizeContextType);
@@ -18,10 +17,8 @@ export const ResizeProvider = ({ children }) => {
 
   const maxRightPanelWidth = 1284;
 
-  const [clientWidth, setClientWidth] = useState(maxRightPanelWidth + maxLeftPanelWidth);
-
   const [leftPanelWidth, setLeftPanelWidth] = useState(250);
-  const [rightPanelWidth, setRightPanelWidth] = useState(maxRightPanelWidth + 205);
+  const [rightPanelWidth, setRightPanelWidth] = useState(maxRightPanelWidth);
 
   const handleMouseDown = e => {
     document.addEventListener("mouseup", handleMouseUp, true);
@@ -33,13 +30,19 @@ export const ResizeProvider = ({ children }) => {
     document.removeEventListener("mousemove", handleMouseMove, true);
   };
 
+  useEffect(() => {
+    onResize();
+  }, [])
+  
+  const onResize = () => {
+    setRightPanelWidth(document.documentElement.clientWidth - leftPanelWidth - 50);
+  }
+
   const handleMouseMove = useCallback(e => {
     const newWidth = e.clientX - document.body.offsetLeft;
     if (newWidth > minLeftPanelWidth && newWidth < maxLeftPanelWidth) {
-      const clientWidth = document.documentElement.clientWidth;
-      setClientWidth(document.documentElement.clientWidth);
-      setRightPanelWidth(clientWidth - newWidth)
       setLeftPanelWidth(newWidth);
+      setRightPanelWidth(document.documentElement.clientWidth - newWidth - 50)
     }
   }, []);
 
@@ -52,7 +55,6 @@ export const ResizeProvider = ({ children }) => {
         handleMouseMove,
         handleMouseDown,
         handleMouseUp,
-        setClientWidth
       }}
     >
       {children}

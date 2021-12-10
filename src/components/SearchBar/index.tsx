@@ -17,7 +17,7 @@ import { MailContext } from '../../contexts/MailContext';
 const SearchBar: React.FC = () => {
 
   const { rightPanelWidth } = useContext(ResizeContext);
-  const { isIndeterminate, setSelectedItems, allSelected, selectedItems, setArquivedItems, setOnSelectionMode } = useContext(MailContext);
+  const { emails, isIndeterminate, setSelectedItems, allSelected, selectedItems, setarchivedItems, setOnSelectionMode, archivedItems } = useContext(MailContext);
 
   const bg = useColorModeValue("white", "gray.800");
 
@@ -60,7 +60,12 @@ const SearchBar: React.FC = () => {
         <Button size='sm'>
           Atribuir
         </Button>
-        <Button size='sm' onClick={(e) => setArquivedItems([...selectedItems])}>
+        <Button size='sm' onClick={(e) => {
+          console.log({selectedItems, emails})
+            const allEmailsIds = selectedItems.map((isChecked, index) => ({emailId: emails[index].id, checked: isChecked}));
+            const checkedEmailsIds = allEmailsIds.filter(email => email.checked).map(email => email.emailId);
+            setarchivedItems([...archivedItems, ...checkedEmailsIds]);
+          }}>
           Arquivar
         </Button>
         <Button size='sm'>

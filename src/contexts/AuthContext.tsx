@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { setCookie, parseCookies } from 'nookies';
+import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import Router from 'next/router';
 
 import { useToast } from '@chakra-ui/toast';
@@ -19,7 +19,8 @@ type AuthContextType = {
   userIsAuthenticated: boolean;
   user: User,
   signIn: (data: SignInData) => Promise<void>,
-  isLoading: boolean
+  isLoading: boolean,
+  logout: Function
 }
 
 export const AuthContext = createContext({ } as AuthContextType);
@@ -71,8 +72,19 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const logout = () => {
+    const { 'auth.token': token } = parseCookies()
+
+    if (token) {
+      destroyCookie(null, 'auth.token');
+      setUser(null);
+    }
+
+    Router.push('/');
+  }
+
   return (
-    <AuthContext.Provider value={{ userIsAuthenticated, signIn, user, isLoading }}>
+    <AuthContext.Provider value={{ userIsAuthenticated, signIn, user, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -46,8 +46,8 @@ type MailContextType = {
   setSelectedItems: Dispatch<SetStateAction<boolean[]>>,
   allSelected: boolean,
   isIndeterminate: boolean,
-  setArquivedItems: Dispatch<SetStateAction<boolean[]>>,
-  arquivedItems: boolean[],
+  setarchivedItems: Dispatch<SetStateAction<number[]>>,
+  archivedItems: number[],
   onSelectionMode: boolean,
   setOnSelectionMode: Dispatch<SetStateAction<boolean>>
 }
@@ -61,7 +61,7 @@ export const MailProvider = ({ children }) => {
 
   const [onSelectionMode, setOnSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [arquivedItems, setArquivedItems] = useState([]);
+  const [archivedItems, setarchivedItems] = useState([]);
   const allSelected = selectedItems.every(Boolean);
   const isIndeterminate = selectedItems.some(Boolean) && !allSelected;
 
@@ -73,7 +73,6 @@ export const MailProvider = ({ children }) => {
     try {
       const response = await api.get<EmailFetchResult>(`/items/${menuId}`);
       setEmails(response.data.subMenuItems);
-      console.log(response.data)
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -99,8 +98,8 @@ export const MailProvider = ({ children }) => {
       setSelectedItems,
       allSelected,
       isIndeterminate,
-      setArquivedItems,
-      arquivedItems,
+      setarchivedItems,
+      archivedItems,
       onSelectionMode,
       setOnSelectionMode
     }}>

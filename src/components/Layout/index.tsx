@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Flex, IconButton, useColorMode, useColorModeValue, } from '@chakra-ui/react';
+import { Flex, IconButton, useColorMode, useColorModeValue, Spinner } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
@@ -28,9 +28,9 @@ const Layout: React.FC = ({ children }) => {
             </Flex>
           </Flex>
         </Flex> :
-        <Flex height='100vh' width='100vw' >
-          {children}
-        </Flex>
+          <Flex w='full' alignItems='center' justifyContent='center'>
+            <Spinner  size='xl' />
+          </Flex>
       }
       <Flex style={{position: 'absolute', right: 30}}>
         <IconButton

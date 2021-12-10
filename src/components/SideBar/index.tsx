@@ -1,6 +1,7 @@
-import { ChevronDownIcon, ChevronRightIcon, DragHandleIcon } from '@chakra-ui/icons';
-import { Avatar, Button, Divider, Flex, Menu, MenuButton, MenuItem, MenuList, useColorModeValue } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Avatar, Button, Divider, Flex, Menu, MenuButton, MenuDivider, MenuItem, MenuList, useColorModeValue } from '@chakra-ui/react';
 import React, { useContext } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 import { ResizeContext } from '../../contexts/ResizeContext';
 import Inbox from '../Inbox';
 
@@ -11,6 +12,11 @@ type Props = {
 const SideBar: React.FC<Props> = ({ username }) => {
 
   const { leftPanelWidth, handleMouseDown } = useContext(ResizeContext);
+  const { logout } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logout();
+  }
 
   return (
     <>
@@ -22,9 +28,17 @@ const SideBar: React.FC<Props> = ({ username }) => {
         bgGradient={useColorModeValue("linear(to-b, gray.100, white)", "linear(to-b, gray.700, gray.800)")}
       >
         <Flex justifyContent='space-between' width='100%' minHeight='80px' p={8}>
-          <Avatar
-            name={username}
-          />
+          <Menu>
+            <MenuButton _focus={{ boxShadow: 'outline' }} >
+              <Avatar as={Button} name={username} _hover={{ bg: 'gray.400' }} />
+            </MenuButton>
+            <MenuList>
+              <Flex justifyContent='center'>{username}</Flex>
+              <MenuDivider />
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </MenuList>
+          </Menu>
+
           <Menu >
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               New

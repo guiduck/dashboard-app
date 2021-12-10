@@ -13,11 +13,11 @@ type Email = {
 
 const MailList: React.FC= () => {
 
-  const { emails, emailIsLoading, setSelectedItems, arquivedItems } = useContext(MailContext);
+  const { emails, emailIsLoading, setSelectedItems, archivedItems } = useContext(MailContext);
 
   useEffect(() => {
     setSelectedItems(new Array(emails.length).fill(false))
-  }, [emails, arquivedItems])
+  }, [emails, archivedItems])
 
   return (
     <Flex direction='column' width='100%' p={5} >
@@ -25,7 +25,7 @@ const MailList: React.FC= () => {
         emails.map((email, index) => {
           return (
             <>
-              {arquivedItems[index] != true ?
+              {!archivedItems.includes(email.id) &&
                 <MailCard
                   key={index}
                   id={email.id}
@@ -34,7 +34,7 @@ const MailList: React.FC= () => {
                   owner={email.owner}
                   users={email.users}
                   index={index}
-                /> : <></>
+                /> 
               }
             </>
           );
